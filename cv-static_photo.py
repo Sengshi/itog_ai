@@ -32,8 +32,8 @@ def check_spoof(face_encoding):
     return "Unknown"
 
 
-frame = cv2.imread('testing/test_image.jpg')  # Получение кадра
-
+# Указать путь для проверяемого изображения
+frame = cv2.imread('testing/test_image.jpg')
 
 # Используем библиотеку face_recognition для определения лиц на изображении.
 rgb_frame = frame[:, :, ::-1]  # cv2 использует BGR, face_recognition - RGB
