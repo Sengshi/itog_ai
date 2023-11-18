@@ -12,7 +12,7 @@ def check_spoof(face_encoding):
     if len(known_faces) > 0:
         face_distances = face_recognition.face_distance(known_faces, face_encoding)
         min_distance_index = int(face_distances.argmin())
-        if face_distances[min_distance_index] < 0.4:
+        if face_distances[min_distance_index] < 0.5:
             return known_names[min_distance_index]
     return "Unknown"
 
@@ -43,12 +43,11 @@ if __name__ == '__main__':
         ret, frame = cap.read()
         if not ret:
             break
+        rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 
         # Используем библиотеку face_recognition для определения лиц на изображении.
-        rgb_frame = frame[:, :, ::-1]  # cv2 использует BGR, face_recognition - RGB
         face_locations = face_recognition.face_locations(rgb_frame)
         face_encodings = face_recognition.face_encodings(rgb_frame, face_locations)
-
         for (top, right, bottom, left), face_encoding in zip(face_locations, face_encodings):
             name = check_spoof(face_encoding)
             if name != "Unknown":
